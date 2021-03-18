@@ -68,8 +68,45 @@ d3.json(url).then(data => {
     console.log(data)
     let features = data.features
     console.log(features)
+    let coordinates = [], depth = [], magnitud = []
+    features.forEach( earthquake => {
+        let properties = earthquake.properties;
+        let geometry = earthquake.geometry;
+        coordinates.push([earthquake.geometry.coordinates[1], earthquake.geometry.coordinates[0]] );
+        depth.push(earthquake.geometry.coordinates[2]); // if a number is negative, that means that the earthquake was in a mountain.
+        magnitud.push(earthquake.properties.mag)
+
+        
+    })
+
+    // get depth range
+
+    // get magnitud range, minimun is 2.5 because of the dataset, if using Ritcher scale max is 14.
+    console.log(coordinates)
+    console.log(depth)
+    console.log(magnitud)
+
+    function radius(magnitud){
+        switch (magnitud){
+            case (magnitud > 10):
+                return 500
+                break;
+            case (magnitud > 10):
+                return 500
+                break;
+            case (magnitud > 10):
+                return 500;
+                break;
+            case (magnitud > 10):
+                return 500;
+                break;
+        }
+         
+    }
+    //console.log(properties)
     // let coordsArray = features.map(earthquake => features.geometry.coordinates )
     // console.log(coordsArray)
     // Once we get a response, send the data.features object to the createFeatures function
-    createFeatures(data.features);
+    // createFeatures(data.features);
 });
+
