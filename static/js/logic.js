@@ -4,14 +4,17 @@ let platesUrl = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/
 //  https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=+2014-01-02&maxlongitude=-69.52148437&minlongitude=-123.83789062&maxlatitude=48.74894534&minlatitude=25.16517337
 // Perform a GET request to the query URL
 d3.json(earthquakesUrl).then(data => {
-    let earthquakeData = data.features;
     
     d3.json(platesUrl).then(function(json) {
+        
+        let earthquakeData = data.features;
         let platesData = json.features
-    });
+    
     // Once we get a response, send the data.features object to the createFeatures function
     createFeatures(earthquakeData, platesData);
     //preventDefault();
+    console.log(depthArray)
+    });
 });
 
 function createFeatures(earthquakeData, platesData) {
@@ -19,20 +22,23 @@ function createFeatures(earthquakeData, platesData) {
     // Create circle markers for each feature
     let depthArray = []
     let earthquakesMarkers = earthquakeData.map((feature) =>
+        // depthArray.push([feature.geometry.coordinates[2]])
         L.circle([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], {
             radius: radius(feature.properties.mag),
             stroke: true,
-            color: black,
+            color: "black",
             opacity: 0.75,
             weight: 0.5,
             fill: true,
             fillColor: color(feature.geometry.coordinates[2]),
             fillOpacity: 0.75
         })
-            .bindPopup(`Magnitud: ${feature.properties.mag} <br>
+            .bindPopup(`Magnitud: ${feature.properties.mag} ||
+            Depth: ${feature.geometry.coordinates[2]}<br>
             ${feature.properties.place}<br>
-            Date: ${new Date(feature.properties.time)}`),
-            depthArray.push(feature.geometry.coordinates[2])
+            Date: ${new Date(feature.properties.time)}<br>
+            `),
+            
             
     )
     console.log(depthArray)
@@ -63,7 +69,7 @@ function createFeatures(earthquakeData, platesData) {
         // create line function
     
     function platesLine(feature, layer) {
-        L.polyLine(feature.geometry.coordinates)
+        L.polyline(feature.geometry.coordinates)
     };
     let tectonicPlates = L.geoJSON(platesData, {
         onEachFeature: platesLine,
@@ -77,7 +83,7 @@ function createFeatures(earthquakeData, platesData) {
     createMap(earthquakes, tectonicPlates);
 }
 
-function createMap(earthquakes) {
+function createMap(earthquakes,tectonicPlates) {
 
     // Define maps
     let satelliteMap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -139,7 +145,7 @@ function createMap(earthquakes) {
     // Create overlay object to hold our overlay layer
     let overlayMaps = {
         "Earthquakes": earthquakes,
-        // "Tectonic Plates": tectonicPlates
+        "Tectonic Plates": tectonicPlates
     };
 
     // Create our map, giving it the streetmap and earthquakes layers to display on load
@@ -149,7 +155,7 @@ function createMap(earthquakes) {
             // 0,0
         ],
         zoom: 3,
-        layers: [streetMap, earthquakes]
+        layers: [satelliteMap, earthquakes, tectonicPlates]
     });
 
     // Create a layer control
@@ -172,7 +178,7 @@ function createMap(earthquakes) {
 
 
 function radius (mag) {
-    return mag * 10  
+    return mag * 50000  
 }
 
 // if (mag < 5.5){
@@ -202,17 +208,17 @@ function radius (mag) {
 // #2c7fb8
 // #253494
 function color(depth){
-    let color = ""
-    if (depth < 5.5){
+    // let color = ""
+    if (depth > 100){
         return "#ffffcc"
     }
-    else if (depth < 6.1) {
+    else if (depth > 50) {
         return "#a1dab4"
     }
-    else if (depth < 7) {
+    else if (depth > 30) {
         return "#41b6c4"
     }
-    else if (depth < 8) {
+    else if (depth > 10) {
         return "#2c7fb8"
     }
     else {
