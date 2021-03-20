@@ -2,10 +2,9 @@
 let earthquakesUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.geojson"
 let platesUrl = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json"
 //  https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=+2014-01-02&maxlongitude=-69.52148437&minlongitude=-123.83789062&maxlatitude=48.74894534&minlatitude=25.16517337
-
 // Perform a GET request to the query URL
 d3.json(earthquakesUrl).then(data => {
-    // Perform a GET request to the query URL
+    
     d3.json(platesUrl).then(function(json) {
         
         let earthquakeData = data.features;
@@ -14,55 +13,73 @@ d3.json(earthquakesUrl).then(data => {
     // Once we get a response, send the data.features object to the createFeatures function
     createFeatures(earthquakeData, platesData);
     //preventDefault();
-    
+    console.log(depthArray)
     });
 });
 
-// Define a function we want to run once for each feature in the features array
 function createFeatures(earthquakeData, platesData) {
 
-    // Create circle markers for each feature using the map function
-    
+    // Create circle markers for each feature
+    let depthArray = []
     let earthquakesMarkers = earthquakeData.map((feature) =>
+        // depthArray.push([feature.geometry.coordinates[2]])
         L.circle([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], {
             radius: radius(feature.properties.mag),
             stroke: true,
-            color: color(feature.geometry.coordinates[2]),
-            opacity: 1,
+            color: "black",
+            opacity: 0.75,
             weight: 0.5,
             fill: true,
             fillColor: color(feature.geometry.coordinates[2]),
-            fillOpacity: 0.60
+            fillOpacity: 0.75
         })
-        // Give each feature a popup describing the place and time of the earthquake
-            .bindPopup(`<strong>Magnitud:</strong> ${feature.properties.mag} ||
-            <strong>Depth:</strong> ${feature.geometry.coordinates[2]}<br>
+            .bindPopup(`Magnitud: ${feature.properties.mag} ||
+            Depth: ${feature.geometry.coordinates[2]}<br>
             ${feature.properties.place}<br>
             Date: ${new Date(feature.properties.time)}<br>
             `),
             
             
     )
-    
-    // // Create a layer containing the features array on the earthquakeData object 
+    console.log(depthArray)
+    // 
     let earthquakes = L.layerGroup(earthquakesMarkers)
     
     
-        // create line function for the Tectonic plates
+    // Define a function we want to run once for each feature in the features array
+    // Give each feature a popup describing the place and time of the earthquake
+    
+
+    // function onEachFeature(feature, layer) {
+    //     layer.bindPopup("<h3>" + feature.properties.place +
+    //         "</h3><hr><p>" + new Date(feature.properties.time) + "</p>");
+        // L.circle([earthquake.geometry.coordinates[1], earthquake.geometry.coordinates[0], { //lat and lon
+        //     color: "green", //default
+        //     fillColor: color(depth), // depending on the depth, higher depth darker color
+        //     fillOpacity: 0.75, // default
+        //     radius: radius(magnitud) // depending on the magnitud, more magnitud, bigger.
+        // }).addTo(myMap);
+    // }
+
+    // Create a GeoJSON layer containing the features array on the earthquakeData object
+    // Run the onEachFeature function once for each piece of data in the array
+    // let earthquakes = L.geoJSON(earthquakeData, {
+    //     onEachFeature: onEachFeature
+    // });
+        // create line function
     
     function platesLine(feature, layer) {
         L.polyline(feature.geometry.coordinates)
     };
-    // // Create a GeoJSON layer containing the features array on the PlatesData object 
     let tectonicPlates = L.geoJSON(platesData, {
         onEachFeature: platesLine,
         style: {
             color: 'orange',
-            opacity: 0.8
+            opacity: 0.9
         }
     })
 
-    // Sending our earthquakes and tectonicPlates layers to the createMap function
+    // Sending our earthquakes layer to the createMap function
     createMap(earthquakes, tectonicPlates);
 }
 
@@ -137,7 +154,7 @@ function createMap(earthquakes,tectonicPlates) {
             37.09, -95.71
             // 0,0
         ],
-        zoom: 2,
+        zoom: 3,
         layers: [satelliteMap, earthquakes, tectonicPlates]
     });
 
@@ -159,27 +176,26 @@ function createMap(earthquakes,tectonicPlates) {
 // 7.0 to 7.9	Major earthquake. Serious damage.
 // 8.0 or greater	Great earthquake. Can totally destroy communities near the epicenter.
 
-// Create a function to get the magnitude
+
 function radius (mag) {
-    //return mag * 30000
-    if (mag < 5.5){
-        return mag * 30000
-    }
-    else if (mag < 6.1) {
-        return mag * 35000
-    }
-    else if (mag < 7) {
-        return mag * 40000
-    }
-    else if (mag < 8) {
-        return mag * 45000
-    }
-    else {
-        return mag * 50000
-}
+    return mag * 50000  
 }
 
-
+// if (mag < 5.5){
+//     return mag * 5
+// }
+// else if (mag < 6.1) {
+//     return 200
+// }
+// else if (mag < 7) {
+//     return 300
+// }
+// else if (mag < 8) {
+//     return 400
+// }
+// else {
+//     return 500
+// }
 // Although the assignment asks me to make the color darker if the earthquake is deeper, 
 // since the closer to the surface the more intense and dangerous is the earthquake, I've decided to invert that order. For more info: 
 //https://www.usgs.gov/natural-hazards/earthquake-hazards/science/earthquake-magnitude-energy-release-and-shaking-intensity?qt-science_center_objects=0#qt-science_center_objects
@@ -191,8 +207,6 @@ function radius (mag) {
 // #41b6c4
 // #2c7fb8
 // #253494
-
-// define a function to get the color depending on the depth
 function color(depth){
     // let color = ""
     if (depth > 100){
@@ -201,7 +215,7 @@ function color(depth){
     else if (depth > 50) {
         return "#a1dab4"
     }
-    else if (depth > 25) {
+    else if (depth > 30) {
         return "#41b6c4"
     }
     else if (depth > 10) {
