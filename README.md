@@ -43,19 +43,19 @@ The USGS is interested in building a new set of tools that will allow them visua
 
    * Include popups that provide additional information about the earthquake when a marker is clicked.
    
-      ![PopUp](./images/popUp.jpg)
+   ![PopUp]('images/popUp.jpg')
 
 
    * Create a legend that will provide context for your map data.
    
-      ![Legend](./images/legend.jpg)
+   ![Legend]("./images/legend.jpg")
 
 
    Solutions:
 
    [GitHub](https://github.com/LF-Ruiz/leaflet-challenge/blob/main/Level1/static/js/level1.js) - [Deployed Page Level 1](https://lf-ruiz.github.io/leaflet-challenge/Level1/index.html)
 
-   ![Level1](./images/level1.jpg)
+   ![Level1](images/level1.jpg)
 #
 ## Level 2: More Data (Optional)
 
