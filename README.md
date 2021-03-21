@@ -9,14 +9,16 @@ The USGS is interested in building a new set of tools that will allow them visua
 
 Solutions:
 [GitHub Repository](https://github.com/LF-Ruiz/leaflet-challenge)
+[Deployed Page](https://lf-ruiz.github.io/leaflet-challenge/)
 
 ### Level 1: Basic Visualization
 
 Your first task is to visualize an earthquake data set.
 
 1. **Get your data set**
+   Dataset extract from [USGS GeoJSON Feed](http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php)
+   Dataset chosen [Earthquakes more than 2.5 in the las month](https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.geojson)
 
-   The USGS provides earthquake data in a number of different formats, updated every 5 minutes. Visit the [USGS GeoJSON Feed](http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php) page and pick a data set to visualize. When you click on a data set, for example 'All Earthquakes from the Past 7 Days', you will be given a JSON representation of that data. You will be using the URL of this JSON to pull in the data for our visualization.
 
 2. **Import & Visualize the Data**
 
@@ -24,10 +26,34 @@ Your first task is to visualize an earthquake data set.
 
    * Your data markers should reflect the magnitude of the earthquake by their size and  depth of the earthquake by color. Earthquakes with higher magnitudes should appear larger and earthquakes with greater depth should appear darker in color.
 
+      - For the radius size steps I've followed the [Ritcher Scale](http://www.geo.mtu.edu/UPSeis/magnitude.html) parameters to make sure the size reflects fairly the magnitud
+         
+      - For the color I've followed the [Earth's layers](https://en.wikipedia.org/wiki/Structure_of_Earth) to set the steps.
+      I've extract the Color scale from [Color Brewer 2.0](https://colorbrewer2.org/#type=sequential&scheme=YlGnBu&n=5)
+      I've decided to reverse the order of the color scale since the closer to the surface the more intense and dangerous is the earthquake, 
+      so you are going to find that the less the depth appear darker in color. [More Information here](https://www.usgs.gov/natural-hazards/earthquake-hazards/science/earthquake-magnitude-energy-release-and-shaking-intensity?qt-science_center_objects=0#qt-science_center_objects)
+
    * Include popups that provide additional information about the earthquake when a marker is clicked.
-
+   
+   ![PopUp](./images/popUp.jpg)
    * Create a legend that will provide context for your map data.
+   
+   ![Legend](./images/legend.jpg)
 
 
-        Solutions:
-        [GitHub](https://github.com/LF-Ruiz/leaflet-challenge/blob/main/static/js/logic.js)
+   Solutions:
+      [GitHub](https://github.com/LF-Ruiz/leaflet-challenge/blob/main/static/js/logic.js)
+
+### Level 2: More Data (Optional)
+
+The USGS wants you to plot a second data set on your map to illustrate the relationship between tectonic plates and seismic activity. You will need to pull in a second data set and visualize it along side your original set of data. Data on tectonic plates can be found at <https://github.com/fraxen/tectonicplates>. Data source credit and recognition: Hugo Ahlenius, Nordpil and Peter Bird.
+
+* Plot a second data set on our map.
+
+* Add a number of base maps to choose from as well as separate out our two different data sets into overlays that can be turned on and off independently.
+
+* Add layer controls to our map.
+
+   Solutions: [GitHub](https://github.com/LF-Ruiz/leaflet-challenge/blob/main/static/js/logic.js)-[Deployed Page](https://lf-ruiz.github.io/leaflet-challenge/)
+
+![StepTwoPicture](./images/stepTwo.jpg)
