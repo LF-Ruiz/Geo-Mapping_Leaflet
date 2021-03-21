@@ -1,25 +1,17 @@
 // Store our API endpoint inside queryUrl
 let earthquakesUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.geojson"
-let platesUrl = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json"
 //  https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=+2014-01-02&maxlongitude=-69.52148437&minlongitude=-123.83789062&maxlatitude=48.74894534&minlatitude=25.16517337
 
 // Perform a GET request to the query URL
 d3.json(earthquakesUrl).then(data => {
-    // Perform a GET request to the query URL
-    d3.json(platesUrl).then(function (json) {
-
-        let earthquakeData = data.features;
-        let platesData = json.features
-
-        // Once we get a response, send the data.features object to the createFeatures function
-        createFeatures(earthquakeData, platesData);
-        //preventDefault();
-
-    });
+    // define earthquake Data
+    let earthquakeData = data.features;
+    // Once we get a response, send the data.features object to the createFeatures function
+    createFeatures(earthquakeData);
 });
 
 // Define a function we want to run once for each feature in the features array
-function createFeatures(earthquakeData, platesData) {
+function createFeatures(earthquakeData) {
 
     // Create circle markers for each feature using the map function
 
@@ -39,38 +31,28 @@ function createFeatures(earthquakeData, platesData) {
             <strong>Depth:</strong> ${feature.geometry.coordinates[2]} km <br>
             ${feature.properties.place}<br>
             Date: ${new Date(feature.properties.time)}<br>
-            `),
-
-
+            `)
+            
     )
-
     // // Create a layer containing the features array on the earthquakeData object 
-    let earthquakes = L.layerGroup(earthquakesMarkers)
+    let earthquakes = L.layerGroup(earthquakesMarkers);
 
-
-    // create line function for the Tectonic plates
-
-    function platesLine(feature, layer) {
-        L.polyline(feature.geometry.coordinates)
-    };
-    // // Create a GeoJSON layer containing the features array on the PlatesData object
-
-    let tectonicPlates = L.geoJSON(platesData, {
-        onEachFeature: platesLine,
-        style: {
-            color: 'orange',
-            opacity: 0.8
-        }
-    })
-
-    // Sending our earthquakes and tectonicPlates layers to the createMap function
-    createMap(earthquakes, tectonicPlates);
+    createMap(earthquakes);
 }
 
-function createMap(earthquakes, tectonicPlates) {
-
+function createMap(earthquakes) {
+    // Create our map, giving it the streetmap and earthquakes layers to display on load
+    let myMap = L.map("map", {
+        center: [
+            // 37.09, -95.71
+            15,0
+        ],
+        zoom: 3,
+        layers: [earthquakes]
+        
+    });
     // Define maps
-    let satelliteMap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+    L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
         attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
         tileSize: 512,
         maxZoom: 18,
@@ -81,73 +63,10 @@ function createMap(earthquakes, tectonicPlates) {
             "source": "mapbox-raster-dem",
             "exaggeration": 5,
         }
-    });
-
-    let streetMap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-        attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
-        tileSize: 500,
-        maxZoom: 18,
-        zoomOffset: -1,
-        id: "mapbox/streets-v11",
-        accessToken: API_KEY
-    });
-
-    let lightMap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-        attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
-        tileSize: 512,
-        maxZoom: 18,
-        zoomOffset: -1,
-        id: "mapbox/light-v10",
-        accessToken: API_KEY
-    });
-
-    let outdoorsMap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-        attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
-        tileSize: 512,
-        maxZoom: 18,
-        zoomOffset: -1,
-        id: "mapbox/outdoors-v11",
-        accessToken: API_KEY
-    });
-
-    let darkMap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-        attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-        maxZoom: 18,
-        id: "dark-v10",
-        accessToken: API_KEY
-    });
-
-    // Define a baseMaps object to hold our base layers
-    let baseMaps = {
-        "Satellite": satelliteMap,
-        "Street Map": streetMap,
-        "Light Map": lightMap,
-        "Outdoors Map": outdoorsMap,
-        "Dark Map": darkMap,
-    };
-
-    // Create overlay object to hold our overlay layer
-    let overlayMaps = {
-        "Earthquakes": earthquakes,
-        "Tectonic Plates": tectonicPlates,
-    };
-
-    // Create our map, giving it the streetmap and earthquakes layers to display on load
-    let myMap = L.map("map", {
-        center: [
-            // 37.09, -95.71
-            15,0
-        ],
-        zoom: 3,
-        layers: [satelliteMap, earthquakes, tectonicPlates]
-    });
-
-    // Create a layer control
-    // Pass in our baseMaps and overlayMaps
-    // Add the layer control to the map
-    L.control.layers(baseMaps, overlayMaps, {
-        collapsed: true
     }).addTo(myMap);
+
+    
+    
 
     // Set up the legend
     let legend = L.control({ position: "bottomright" });
@@ -242,6 +161,7 @@ function color(depth) {
         return "#253494"
     }// step 5: upper crust
 }
+
 
 // Luis Fernando Ruiz Lopez
 // Rice University Data Analysis and Visualization Boot Camp

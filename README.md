@@ -42,7 +42,9 @@ Your first task is to visualize an earthquake data set.
 
 
    Solutions:
-      [GitHub](https://github.com/LF-Ruiz/leaflet-challenge/blob/main/static/js/logic.js)
+      [GitHub](https://github.com/LF-Ruiz/leaflet-challenge/blob/main/static/js/stepOne.js)
+
+   ![StepOne](./images/level1.jpg)
 
 ### Level 2: More Data (Optional)
 
@@ -56,4 +58,4 @@ The USGS wants you to plot a second data set on your map to illustrate the relat
 
    Solutions: [GitHub](https://github.com/LF-Ruiz/leaflet-challenge/blob/main/static/js/logic.js)-[Deployed Page](https://lf-ruiz.github.io/leaflet-challenge/)
 
-![StepTwoPicture](./images/stepTwo.jpg)
+![LevelTwoPicture](./images/level2.jpg)
