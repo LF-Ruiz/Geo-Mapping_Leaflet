@@ -35,8 +35,8 @@ function createFeatures(earthquakeData, platesData) {
             fillOpacity: 0.60
         })
             // Give each feature a popup describing the place and time of the earthquake
-            .bindPopup(`<strong>Magnitud:</strong> ${feature.properties.mag} ||
-            <strong>Depth:</strong> ${feature.geometry.coordinates[2]}<br>
+            .bindPopup(`<strong>Magnitud:</strong> ${feature.properties.mag} Ritcher||
+            <strong>Depth:</strong> ${feature.geometry.coordinates[2]} km <br>
             ${feature.properties.place}<br>
             Date: ${new Date(feature.properties.time)}<br>
             `),
@@ -123,13 +123,13 @@ function createMap(earthquakes, tectonicPlates) {
         "Street Map": streetMap,
         "Light Map": lightMap,
         "Outdoors Map": outdoorsMap,
-        "Dark Map": darkMap
+        "Dark Map": darkMap,
     };
 
     // Create overlay object to hold our overlay layer
     let overlayMaps = {
         "Earthquakes": earthquakes,
-        "Tectonic Plates": tectonicPlates
+        "Tectonic Plates": tectonicPlates,
     };
 
     // Create our map, giving it the streetmap and earthquakes layers to display on load
@@ -138,7 +138,7 @@ function createMap(earthquakes, tectonicPlates) {
             // 37.09, -95.71
             15,0
         ],
-        zoom: 2.2,
+        zoom: 3,
         layers: [satelliteMap, earthquakes, tectonicPlates]
     });
 
@@ -160,8 +160,8 @@ function createMap(earthquakes, tectonicPlates) {
         // Add min & max
         let legendInfo = "<h1>Depth</h1>" +
             "<div class=\"labels\">" +
-            "<div class=\"min\">" + limits[0] + "</div>" +
-            "<div class=\"max\">"  + ">"+ limits[limits.length - 1] + "</div>" +
+            "<div class=\"min\">" + limits[0]+' km'+ "</div>" +
+            "<div class=\"max\">"  + ">"+ limits[limits.length - 1]+" km" + "</div>" +
             "</div>";
 
         div.innerHTML = legendInfo;
@@ -222,21 +222,23 @@ function radius(mag) {
 // #253494
 
 // define a function to get the color depending on the depth
+// the steps are related to the Earth's crust layers https://en.wikipedia.org/wiki/Structure_of_Earth
 function color(depth) {
     // let color = ""
-    if (depth > 100) {
+    
+    if (depth > 220) {
         return "#ffffcc"
-    }
-    else if (depth > 50) {
+    } // step 1: mantle, Mesospheric mantle
+    else if (depth > 80) {
         return "#a1dab4"
-    }
-    else if (depth > 25) {
+    } // step 2: mantle, Asthenosphere
+    else if (depth > 20) {
         return "#41b6c4"
-    }
+    }// step 3: LID
     else if (depth > 10) {
         return "#2c7fb8"
-    }
+    }// step 4: lower crust
     else {
         return "#253494"
-    }
+    }// step 5: upper crust
 }
