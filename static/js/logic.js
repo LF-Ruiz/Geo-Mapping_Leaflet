@@ -6,15 +6,15 @@ let platesUrl = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/
 // Perform a GET request to the query URL
 d3.json(earthquakesUrl).then(data => {
     // Perform a GET request to the query URL
-    d3.json(platesUrl).then(function(json) {
-        
+    d3.json(platesUrl).then(function (json) {
+
         let earthquakeData = data.features;
         let platesData = json.features
-    
-    // Once we get a response, send the data.features object to the createFeatures function
-    createFeatures(earthquakeData, platesData);
-    //preventDefault();
-    
+
+        // Once we get a response, send the data.features object to the createFeatures function
+        createFeatures(earthquakeData, platesData);
+        //preventDefault();
+
     });
 });
 
@@ -22,7 +22,7 @@ d3.json(earthquakesUrl).then(data => {
 function createFeatures(earthquakeData, platesData) {
 
     // Create circle markers for each feature using the map function
-    
+
     let earthquakesMarkers = earthquakeData.map((feature) =>
         L.circle([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], {
             radius: radius(feature.properties.mag),
@@ -34,26 +34,27 @@ function createFeatures(earthquakeData, platesData) {
             fillColor: color(feature.geometry.coordinates[2]),
             fillOpacity: 0.60
         })
-        // Give each feature a popup describing the place and time of the earthquake
+            // Give each feature a popup describing the place and time of the earthquake
             .bindPopup(`<strong>Magnitud:</strong> ${feature.properties.mag} ||
             <strong>Depth:</strong> ${feature.geometry.coordinates[2]}<br>
             ${feature.properties.place}<br>
             Date: ${new Date(feature.properties.time)}<br>
             `),
-            
-            
+
+
     )
-    
+
     // // Create a layer containing the features array on the earthquakeData object 
     let earthquakes = L.layerGroup(earthquakesMarkers)
-    
-    
-        // create line function for the Tectonic plates
-    
+
+
+    // create line function for the Tectonic plates
+
     function platesLine(feature, layer) {
         L.polyline(feature.geometry.coordinates)
     };
-    // // Create a GeoJSON layer containing the features array on the PlatesData object 
+    // // Create a GeoJSON layer containing the features array on the PlatesData object
+
     let tectonicPlates = L.geoJSON(platesData, {
         onEachFeature: platesLine,
         style: {
@@ -66,7 +67,7 @@ function createFeatures(earthquakeData, platesData) {
     createMap(earthquakes, tectonicPlates);
 }
 
-function createMap(earthquakes,tectonicPlates) {
+function createMap(earthquakes, tectonicPlates) {
 
     // Define maps
     let satelliteMap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -134,10 +135,10 @@ function createMap(earthquakes,tectonicPlates) {
     // Create our map, giving it the streetmap and earthquakes layers to display on load
     let myMap = L.map("map", {
         center: [
-            37.09, -95.71
-            // 0,0
+            // 37.09, -95.71
+            15,0
         ],
-        zoom: 2,
+        zoom: 2.2,
         layers: [satelliteMap, earthquakes, tectonicPlates]
     });
 
@@ -147,7 +148,35 @@ function createMap(earthquakes,tectonicPlates) {
     L.control.layers(baseMaps, overlayMaps, {
         collapsed: false
     }).addTo(myMap);
-}
+
+    // Set up the legend
+    let legend = L.control({ position: "bottomright" });
+    legend.onAdd = function () {
+        let div = L.DomUtil.create("div", "info legend");
+        let limits = [0, 10, 25, 50, 100];
+        let colors = ['#253494','#2c7fb8', '#41b6c4', '#a1dab4','#ffffcc'];
+        let labels = [];
+
+        // Add min & max
+        let legendInfo = "<h1>Depth</h1>" +
+            "<div class=\"labels\">" +
+            "<div class=\"min\">" + limits[0] + "</div>" +
+            "<div class=\"max\">"  + ">"+ limits[limits.length - 1] + "</div>" +
+            "</div>";
+
+        div.innerHTML = legendInfo;
+
+        limits.forEach(function (limit, index) {
+            labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
+        });
+
+        div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+        return div;
+    };
+
+    // Adding legend to the map
+    legend.addTo(myMap);
+};
 
 // Earthquake magnitud scale: => http://www.geo.mtu.edu/UPSeis/magnitude.html -- also --
 
@@ -160,9 +189,9 @@ function createMap(earthquakes,tectonicPlates) {
 // 8.0 or greater	Great earthquake. Can totally destroy communities near the epicenter.
 
 // Create a function to get the magnitude
-function radius (mag) {
+function radius(mag) {
     //return mag * 30000
-    if (mag < 5.5){
+    if (mag < 5.5) {
         return mag * 30000
     }
     else if (mag < 6.1) {
@@ -176,7 +205,7 @@ function radius (mag) {
     }
     else {
         return mag * 50000
-}
+    }
 }
 
 
@@ -193,9 +222,9 @@ function radius (mag) {
 // #253494
 
 // define a function to get the color depending on the depth
-function color(depth){
+function color(depth) {
     // let color = ""
-    if (depth > 100){
+    if (depth > 100) {
         return "#ffffcc"
     }
     else if (depth > 50) {
