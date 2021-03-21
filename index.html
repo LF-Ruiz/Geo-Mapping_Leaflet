@@ -6,7 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Leaflet Step-1</title>
-
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
     integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
@@ -17,10 +19,16 @@
 </head>
 
 <body>
-
+  <!-- <div class= 'container'> -->
+    <!-- <div class= 'row'> -->
+      <h1 class = "title"> Earthquakes with magnitud more than 2.5 Ritcher Scale in the last month</h1>
+    </div>
+  
   <!-- The div that holds our map -->
-  <div id="map"></div>
-
+    <!-- <section> -->
+      <div id="map" class = row></div>
+    <!-- </section> -->
+  <!-- </div> -->
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
     integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
@@ -32,6 +40,8 @@
   <script type="text/javascript" src="static/js/config.js"></script>
   <!-- Our JavaScript -->
   <script type="text/javascript" src="static/js/logic.js"></script>
+  <!-- Leaflet heatmap plugin-->
+  <script type="text/javascript" src="static/js/leaflet-heat.js"></script>
 </body>
 
 </html>
