@@ -1,26 +1,34 @@
-# Leaflet
+# Geo-Mapping
+   #### Objetive:
+   - Build a map that shows earthquakes around the world using the [USGS GeoJSON Feed](http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php)
+   #### Solutions:
+   [GitHub Repository](https://github.com/LF-Ruiz/leaflet-challenge) |-|
+   [Deployed Page](https://lf-ruiz.github.io/leaflet-challenge/)
 
-Leaflet is the leading open-source JavaScript library for mobile-friendly interactive maps. Leaflet is designed with simplicity, performance and usability in mind. It works efficiently across all major desktop and mobile platforms, can be extended with lots of plugins, has a beautiful, easy to use and well-documented API and a simple, readable source code that is a joy to contribute to.
-
+   #### Tools:
+   - JavaScript:
+      - Leaflet, D3.
+   - HTML, CSS
+#
+## Leaflet
+Leaflet is the library I'm using in this assignment. Leaflet is the leading open-source JavaScript library for mobile-friendly interactive maps. Leaflet is designed with simplicity, performance and usability in mind. It works efficiently across all major desktop and mobile platforms, can be extended with lots of plugins, has a beautiful, easy to use and well-documented API and a simple, readable source code.
+#
 ## Assignment
 Welcome to the United States Geological Survey, or USGS for short! The USGS is responsible for providing scientific data about natural hazards, the health of our ecosystems and environment; and the impacts of climate and land-use change. Their scientists develop new methods and tools to supply timely, relevant, and useful information about the Earth and its processes. As a new hire, you will be helping them out with an exciting new project!
 
 The USGS is interested in building a new set of tools that will allow them visualize their earthquake data. They collect a massive amount of data from all over the world each day, but they lack a meaningful way of displaying it. Their hope is that being able to visualize their data will allow them to better educate the public and other government organizations (and hopefully secure more funding..) on issues facing our planet.
+#
 
-Solutions:
-[GitHub Repository](https://github.com/LF-Ruiz/leaflet-challenge) |-|
-[Deployed Page](https://lf-ruiz.github.io/leaflet-challenge/)
+## Level 1: Basic Visualization
 
-### Level 1: Basic Visualization
+### First task is to visualize an earthquake data set.
 
-First task is to visualize an earthquake data set.
-
-1. **Get your data set**
+### 1. **Get your data set**
    Dataset extract from [USGS GeoJSON Feed](http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php)
    Dataset chosen [Earthquakes more than 2.5 in the las month](https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.geojson)
 
 
-2. **Import & Visualize the Data**
+### 2. **Import & Visualize the Data**
 
    Create a map using Leaflet that plots all of the earthquakes from your data set based on their longitude and latitude.
 
@@ -45,11 +53,11 @@ First task is to visualize an earthquake data set.
 
    Solutions:
 
-      [GitHub](https://github.com/LF-Ruiz/leaflet-challenge/blob/main/Level1/static/js/level1.js) - [Deployed Page](https://lf-ruiz.github.io/leaflet-challenge/Level1/index.html)
+   [GitHub](https://github.com/LF-Ruiz/leaflet-challenge/blob/main/Level1/static/js/level1.js) - [Deployed Page Level 1](https://lf-ruiz.github.io/leaflet-challenge/Level1/index.html)
 
-      ![Level1](./images/level1.jpg)
-
-### Level 2: More Data (Optional)
+   ![Level1](./images/level1.jpg)
+#
+## Level 2: More Data (Optional)
 
 The USGS wants you to plot a second data set on your map to illustrate the relationship between tectonic plates and seismic activity. You will need to pull in a second data set and visualize it along side your original set of data. Data on tectonic plates can be found at <https://github.com/fraxen/tectonicplates>. Data source credit and recognition: Hugo Ahlenius, Nordpil and Peter Bird.
 
@@ -59,6 +67,7 @@ The USGS wants you to plot a second data set on your map to illustrate the relat
 
 * Add layer controls to our map.
 
-   Solutions: [GitHub](https://github.com/LF-Ruiz/leaflet-challenge/blob/main/static/js/logic.js)-[Deployed Page](https://lf-ruiz.github.io/leaflet-challenge/)
+   Solutions: [GitHub](https://github.com/LF-Ruiz/leaflet-challenge/blob/main/static/js/logic.js)-[Deployed Page Level 2](https://lf-ruiz.github.io/leaflet-challenge/)
 
 ![LevelTwoPicture](./images/level2.jpg)
+#
