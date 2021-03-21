@@ -3,7 +3,7 @@
    - Build a map that shows earthquakes around the world using the [USGS GeoJSON Feed](http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php)
    #### Solutions:
    [GitHub Repository](https://github.com/LF-Ruiz/leaflet-challenge) |-|
-   [Deployed Page](https://lf-ruiz.github.io/leaflet-challenge/)
+   [Deployed Page](https://lf-ruiz.github.io/Geo-Mapping_Leaflet/)
 
    #### Tools:
    - JavaScript:
@@ -43,19 +43,19 @@ The USGS is interested in building a new set of tools that will allow them visua
 
    * Include popups that provide additional information about the earthquake when a marker is clicked.
    
-   ![PopUp](Images/popUp.jpg)
+   ![PopUp](Images/popUp.JPG)
 
 
    * Create a legend that will provide context for your map data.
    
-   ![Legend](/Images/legend.jpg)
+   ![Legend](/Images/legend.JPG)
 
 
    Solutions:
 
-   [GitHub](https://github.com/LF-Ruiz/leaflet-challenge/blob/main/Level1/static/js/level1.js) - [Deployed Page Level 1](https://lf-ruiz.github.io/leaflet-challenge/Level1/index.html)
+   [GitHub](https://github.com/LF-Ruiz/leaflet-challenge/blob/main/Level1/static/js/level1.js) - [Deployed Page Level 1](https://lf-ruiz.github.io/Geo-Mapping_Leaflet/Level1/index.html)
 
-   ![Level1](/Images/level1.jpg)
+   ![Level1](/Images/level1.JPG)
 #
 ## Level 2: More Data (Optional)
 
@@ -67,7 +67,7 @@ The USGS wants you to plot a second data set on your map to illustrate the relat
 
 * Add layer controls to our map.
 
-   Solutions: [GitHub](https://github.com/LF-Ruiz/leaflet-challenge/blob/main/static/js/logic.js)-[Deployed Page Level 2](https://lf-ruiz.github.io/leaflet-challenge/)
+   Solutions: [GitHub](https://github.com/LF-Ruiz/leaflet-challenge/blob/main/static/js/logic.js)-[Deployed Page Level 2](https://lf-ruiz.github.io/Geo-Mapping_Leaflet/)
 
-![LevelTwoPicture](/Images/level2.jpg)
+![LevelTwoPicture](/Images/level2.JPG)
 #
