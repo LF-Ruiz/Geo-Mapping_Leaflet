@@ -8,12 +8,12 @@ Welcome to the United States Geological Survey, or USGS for short! The USGS is r
 The USGS is interested in building a new set of tools that will allow them visualize their earthquake data. They collect a massive amount of data from all over the world each day, but they lack a meaningful way of displaying it. Their hope is that being able to visualize their data will allow them to better educate the public and other government organizations (and hopefully secure more funding..) on issues facing our planet.
 
 Solutions:
-[GitHub Repository](https://github.com/LF-Ruiz/leaflet-challenge)
+[GitHub Repository](https://github.com/LF-Ruiz/leaflet-challenge) |-|
 [Deployed Page](https://lf-ruiz.github.io/leaflet-challenge/)
 
 ### Level 1: Basic Visualization
 
-Your first task is to visualize an earthquake data set.
+First task is to visualize an earthquake data set.
 
 1. **Get your data set**
    Dataset extract from [USGS GeoJSON Feed](http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php)
@@ -27,24 +27,27 @@ Your first task is to visualize an earthquake data set.
    * Your data markers should reflect the magnitude of the earthquake by their size and  depth of the earthquake by color. Earthquakes with higher magnitudes should appear larger and earthquakes with greater depth should appear darker in color.
 
       - For the radius size steps I've followed the [Ritcher Scale](http://www.geo.mtu.edu/UPSeis/magnitude.html) parameters to make sure the size reflects fairly the magnitud
-         
+
       - For the color I've followed the [Earth's layers](https://en.wikipedia.org/wiki/Structure_of_Earth) to set the steps.
-      I've extract the Color scale from [Color Brewer 2.0](https://colorbrewer2.org/#type=sequential&scheme=YlGnBu&n=5)
+      I've extract the Color scale from [Color Brewer 2.0](https://colorbrewer2.org/#type=sequential&scheme=YlGnBu&n=5).
       I've decided to reverse the order of the color scale since the closer to the surface the more intense and dangerous is the earthquake, 
-      so you are going to find that the less the depth appear darker in color. [More Information here](https://www.usgs.gov/natural-hazards/earthquake-hazards/science/earthquake-magnitude-energy-release-and-shaking-intensity?qt-science_center_objects=0#qt-science_center_objects)
+      so you are going to find that the less the depth of the earthquake the darker the color in the map. [More Information here](https://www.usgs.gov/natural-hazards/earthquake-hazards/science/earthquake-magnitude-energy-release-and-shaking-intensity?qt-science_center_objects=0#qt-science_center_objects)
 
    * Include popups that provide additional information about the earthquake when a marker is clicked.
    
-   ![PopUp](./images/popUp.jpg)
+      ![PopUp](./images/popUp.jpg)
+
+
    * Create a legend that will provide context for your map data.
    
-   ![Legend](./images/legend.jpg)
+      ![Legend](./images/legend.jpg)
 
 
    Solutions:
-      [GitHub](https://github.com/LF-Ruiz/leaflet-challenge/blob/main/static/js/stepOne.js)
 
-   ![StepOne](./images/level1.jpg)
+      [GitHub](https://github.com/LF-Ruiz/leaflet-challenge/blob/main/Level1/static/js/level1.js) - [Deployed Page](https://lf-ruiz.github.io/leaflet-challenge/Level1/index.html)
+
+      ![Level1](./images/level1.jpg)
 
 ### Level 2: More Data (Optional)
 
